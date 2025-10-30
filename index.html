@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interaksi Manusia Komputer (IMK)</title>
+    <style>
+        /* Reset dan gaya dasar */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Header dan navigasi */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 40px;
+            margin-right: 10px;
+        }
+
+        .logo h1 {
+            font-size: 1.5rem;
+            color: #2c3e50;
+            font-weight: 700;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: 30px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #2c3e50;
+            font-weight: 500;
+            font-size: 1rem;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: #3498db;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: #3498db;
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .menu-toggle {
+            display: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+        }
+
+        /* Hero section dengan video background */
+        .hero {
+            position: relative;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            overflow: hidden;
+        }
+
+        .video-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: -1;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            padding: 0 20px;
+            z-index: 1;
+        }
+
+        .hero h2 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+        }
+
+        .btn:hover {
+            background: #2980b9;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(52, 152, 219, 0.4);
+        }
+
+        /* Section umum */
+        section {
+            padding: 80px 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+            position: relative;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            display: inline-block;
+        }
+
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            width: 80px;
+            height: 4px;
+            background: #3498db;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 2px;
+        }
+
+        /* Materi section */
+        .materi-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .materi-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        .materi-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .materi-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .materi-content {
+            padding: 20px;
+        }
+
+        .materi-content h3 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+
+        .materi-content p {
+            color: #7f8c8d;
+            font-size: 0.95rem;
+        }
+
+        /* Modal untuk gambar yang diperbesar */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .modal-content {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 5px;
+            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .close-modal:hover {
+            color: #3498db;
+        }
+
+        /* Galeri section */
+        .galeri-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .galeri-item {
+            border-radius: 10px;
+            overflow: hidden;
+            height: 200px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+
+        .galeri-item:hover {
+            transform: scale(1.05);
+        }
+
+        .galeri-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Dosen dan mahasiswa section */
+        .team-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .team-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            padding: 30px 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .team-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .team-img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 20px;
+            border: 5px solid #f1f1f1;
+        }
+
+        .team-card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+            color: #2c3e50;
+        }
+
+        .team-card p {
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+
+        /* Lokasi kampus section */
+        .lokasi-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .lokasi-info {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .lokasi-map {
+            flex: 1;
+            min-width: 300px;
+            height: 400px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .lokasi-map iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* Footer */
+        footer {
+            background: #2c3e50;
+            color: white;
+            padding: 50px 5% 20px;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            max-width: 1400px;
+            margin: 0 auto;
+            gap: 40px;
+        }
+
+        .footer-section {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .footer-section h3 {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-section h3::after {
+            content: '';
+            position: absolute;
+            width: 50px;
+            height: 3px;
+            background: #3498db;
+            bottom: 0;
+            left: 0;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Responsif */
+        @media (max-width: 992px) {
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                right: -100%;
+                width: 80%;
+                height: calc(100vh - 70px);
+                background: white;
+                flex-direction: column;
+                align-items: center;
+                justify-content: flex-start;
+                padding-top: 50px;
+                transition: right 0.3s ease;
+                box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+            }
+
+            .nav-links.active {
+                right: 0;
+            }
+
+            .nav-links li {
+                margin: 15px 0;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+
+            .hero h2 {
+                font-size: 2.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero h2 {
+                font-size: 2rem;
+            }
+
+            .section-title h2 {
+                font-size: 2rem;
+            }
+
+            section {
+                padding: 60px 5%;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero h2 {
+                font-size: 1.8rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .btn {
+                padding: 10px 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header dengan navigasi -->
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSIjMzQ5OGRiIiBkPSJNMjU2IDhDMTE5IDggOCAxMTkgOCAyNTZzMTExIDI0OCAyNDggMjQ4czI0OC0xMTEgMjQ4LTI0OFMzOTMgOCAyNTYgOHptMTQwLjQgMzg2LjFjLTM3LjggMi42LTEyOS43IDE3LjMtMTQxLjcgMTcuMy0xMi40IDAtMTA0LjQtMTQuNi0xNDEuNy0xNy4zYy01LjgtLjgtMTEuOSAyLjUtMTEuOSA4LjdzMTEuMSA1LjYgMTEuMSA1LjZjOTUuNyAyOS43IDE1Mi43IDI1LjEgMTQxLjkgMjUuNEMyNTUgNDQzLjEgMzEzLjIgNDE2IDM5Ni44IDM5OWMxMS4yLTMuMSAxNy41LTguOCAxNy41LTE3LjFjMC04LjgtOC45LTkuNy0xNy45LTEyLjh6TTMzNiAyNzZjMCA0NC4xLTQzLjEgODAtOTYgODBzLTk2LTM1LjktOTYtODBjMC0zMiAzMi4yLTQ4IDQ4LjUtNDhIMjg4YzE2LjMgMCA0OCAxNiA0OCA0OHptLTk2IDMyYzE3LjcgMCAzMi0xNC4zIDMyLTMycy0xNC4zLTMyLTMyLTMycy0zMiAxNC4zLTMyIDMyczE0LjMgMzIgMzIgMzJ6bTk2IDBjMTcuNyAwIDMyLTE0LjMgMzItMzJzLTE0LjMtMzItMzItMzJzLTMyIDE0LjMtMzIgMzJzMTQuMyAzMiAzMiAzMnoiLz48L3N2Zz4=" alt="Logo IMK">
+                <h1>Interaksi Manusia Komputer</h1>
+            </div>
+            <div class="menu-toggle" id="menuToggle">
+                <i>☰</i>
+            </div>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#home">Beranda</a></li>
+                <li><a href="#materi">Materi</a></li>
+                <li><a href="#galeri">Galeri</a></li>
+                <li><a href="#dosen">Dosen</a></li>
+                <li><a href="#mahasiswa">Mahasiswa</a></li>
+                <li><a href="#lokasi">Lokasi</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero section dengan video background -->
+    <section class="hero" id="home">
+        <video autoplay muted loop class="video-background">
+            <source src="imk.mp4" type="video/mp4">
+            Browser Anda tidak mendukung video HTML5.
+        </video>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h2>Interaksi Manusia Komputer</h2>
+            <p>Mempelajari prinsip-prinsip desain antarmuka pengguna yang efektif dan efisien untuk meningkatkan pengalaman pengguna.</p>
+            <a href="#materi" class="btn">Lihat Materi</a>
+        </div>
+    </section>
+
+    <!-- Materi section -->
+    <section id="materi">
+        <div class="section-title">
+            <h2>Materi Kuliah</h2>
+            <p>Kumpulan materi pembelajaran Interaksi Manusia Komputer</p>
+        </div>
+        <div class="materi-container">
+            <div class="materi-card" data-img="https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80">
+                <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Pengantar IMK" class="materi-img">
+                <div class="materi-content">
+                    <h3>Pertemuan 1: Pengantar IMK</h3>
+                    <p>Memahami konsep dasar interaksi manusia komputer dan pentingnya desain antarmuka yang baik.</p>
+                </div>
+            </div>
+            <div class="materi-card" data-img="https://images.unsplash.com/photo-1561070791-2526d30994b5?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80">
+                <img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Prinsip Desain" class="materi-img">
+                <div class="materi-content">
+                    <h3>Pertemuan 2: Prinsip Desain Antarmuka</h3>
+                    <p>Mempelajari prinsip-prinsip dasar dalam merancang antarmuka pengguna yang efektif.</p>
+                </div>
+            </div>
+            <div class="materi-card" data-img="https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80">
+                <img src="https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Evaluasi Antarmuka" class="materi-img">
+                <div class="materi-content">
+                    <h3>Pertemuan 3: Evaluasi Antarmuka</h3>
+                    <p>Teknik dan metode untuk mengevaluasi kualitas antarmuka pengguna.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Galeri section -->
+    <section id="galeri">
+        <div class="section-title">
+            <h2>Galeri Materi</h2>
+            <p>Koleksi visual dari materi pembelajaran IMK</p>
+        </div>
+        <div class="galeri-container">
+            <div class="galeri-item" data-img="https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80">
+                <img src="https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Galeri 1">
+            </div>
+            <div class="galeri-item" data-img="https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80">
+                <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Galeri 2">
+            </div>
+            <div class="galeri-item" data-img="https://images.unsplash.com/photo-1561070791-2526d30994b5?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80">
+                <img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Galeri 3">
+            </div>
+            <div class="galeri-item" data-img="https://images.unsplash.com/photo-1517077304055-6e89abbf09b0?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80">
+                <img src="https://images.unsplash.com/photo-1517077304055-6e89abbf09b0?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Galeri 4">
+            </div>
+        </div>
+    </section>
+
+    <!-- Dosen section -->
+    <section id="dosen">
+        <div class="section-title">
+            <h2>Dosen Pengampu</h2>
+            <p>Pengajar mata kuliah Interaksi Manusia Komputer</p>
+        </div>
+        <div class="team-container">
+            <div class="team-card">
+                <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Dr. Ahmad Wijaya, M.Kom." class="team-img">
+                <h3>Dr. Ahmad Wijaya, M.Kom.</h3>
+                <p>Dosen Pengampu</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mahasiswa section -->
+    <section id="mahasiswa">
+        <div class="section-title">
+            <h2>Mahasiswa</h2>
+            <p>Anggota kelas Interaksi Manusia Komputer</p>
+        </div>
+        <div class="team-container">
+            <div class="team-card">
+                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Rizki Pratama" class="team-img">
+                <h3>Rizki Pratama</h3>
+                <p>NIM: 123456789</p>
+            </div>
+            <div class="team-card">
+                <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Sari Indah" class="team-img">
+                <h3>Sari Indah</h3>
+                <p>NIM: 123456790</p>
+            </div>
+            <div class="team-card">
+                <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Budi Santoso" class="team-img">
+                <h3>Budi Santoso</h3>
+                <p>NIM: 123456791</p>
+            </div>
+            <div class="team-card">
+                <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Dewi Lestari" class="team-img">
+                <h3>Dewi Lestari</h3>
+                <p>NIM: 123456792</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Lokasi kampus section -->
+    <section id="lokasi">
+        <div class="section-title">
+            <h2>Lokasi Kampus</h2>
+            <p>Tempat perkuliahan Interaksi Manusia Komputer</p>
+        </div>
+        <div class="lokasi-container">
+            <div class="lokasi-info">
+                <h3>Universitas Teknologi Indonesia</h3>
+                <p>Jl. Teknologi No. 123, Jakarta Selatan</p>
+                <p>Kode Pos: 12345</p>
+                <p>Telepon: (021) 123-4567</p>
+                <p>Email: info@uti.ac.id</p>
+                <p>Kuliah dilaksanakan setiap Senin dan Kamis pukul 10.00 - 12.00 WIB di Gedung Fakultas Ilmu Komputer, Ruang 301.</p>
+            </div>
+            <div class="lokasi-map">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.521260322283!2d106.8195613502864!3d-6.194741395493371!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f5397167e8dd%3A0x1a113e27e6c8f394!2sMonumen%20Nasional!5e0!3m2!1sid!2sid!4v1585049398254!5m2!1sid!2sid" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Tentang IMK</h3>
+                <p>Mata kuliah Interaksi Manusia Komputer mempelajari prinsip-prinsip desain antarmuka pengguna yang efektif untuk meningkatkan pengalaman pengguna dalam berinteraksi dengan sistem komputer.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Kontak</h3>
+                <p>Email: imk@uti.ac.id</p>
+                <p>Telepon: (021) 123-4567 ext. 890</p>
+                <p>Alamat: Gedung Fakultas Ilmu Komputer, Universitas Teknologi Indonesia</p>
+            </div>
+            <div class="footer-section">
+                <h3>Link Cepat</h3>
+                <ul style="list-style: none; padding: 0;">
+                    <li><a href="#home" style="color: #ddd; text-decoration: none;">Beranda</a></li>
+                    <li><a href="#materi" style="color: #ddd; text-decoration: none;">Materi</a></li>
+                    <li><a href="#galeri" style="color: #ddd; text-decoration: none;">Galeri</a></li>
+                    <li><a href="#dosen" style="color: #ddd; text-decoration: none;">Dosen</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2023 Interaksi Manusia Komputer - Universitas Teknologi Indonesia</p>
+        </div>
+    </footer>
+
+    <!-- Modal untuk gambar yang diperbesar -->
+    <div class="modal" id="imageModal">
+        <span class="close-modal" id="closeModal">&times;</span>
+        <img src="" alt="Gambar Materi" class="modal-content" id="modalImage">
+    </div>
+
+    <script>
+        // Toggle menu untuk mobile
+        const menuToggle = document.getElementById('menuToggle');
+        const navLinks = document.getElementById('navLinks');
+
+        menuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        // Modal untuk gambar yang diperbesar
+        const modal = document.getElementById('imageModal');
+        const modalImage = document.getElementById('modalImage');
+        const closeModal = document.getElementById('closeModal');
+
+        // Event listener untuk materi card
+        document.querySelectorAll('.materi-card').forEach(card => {
+            card.addEventListener('click', () => {
+                const imgSrc = card.getAttribute('data-img');
+                modalImage.src = imgSrc;
+                modal.classList.add('active');
+            });
+        });
+
+        // Event listener untuk galeri item
+        document.querySelectorAll('.galeri-item').forEach(item => {
+            item.addEventListener('click', () => {
+                const imgSrc = item.getAttribute('data-img');
+                modalImage.src = imgSrc;
+                modal.classList.add('active');
+            });
+        });
+
+        // Tutup modal
+        closeModal.addEventListener('click', () => {
+            modal.classList.remove('active');
+        });
+
+        // Tutup modal ketika klik di luar gambar
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.classList.remove('active');
+            }
+        });
+
+        // Efek scroll pada header
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 50) {
+                header.style.background = 'rgba(255, 255, 255, 0.98)';
+                header.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.1)';
+            } else {
+                header.style.background = 'rgba(255, 255, 255, 0.95)';
+                header.style.boxShadow = '0 2px 15px rgba(0, 0, 0, 0.1)';
+            }
+        });
+
+        // Smooth scroll untuk navigasi
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    // Tutup menu mobile jika terbuka
+                    navLinks.classList.remove('active');
+                    
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
